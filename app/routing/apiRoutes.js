@@ -1,42 +1,41 @@
 var friends = require('../data/friends.js');
 
-// Export API routes
-module.exports = function (app) {
-console.log('___ENTER apiRoutes.js___');
+module.exports = function(app){
 
-    // Total list of friend entries
-    app.get('/api/friends', function (req, res) {
-        res.json(friends);
-    });
+  // API GET Requests
+  app.get('/api/friends', function(req, res){
+    res.json(friends);
+  });
 
-    // Add new friend entry
-    app.post('/api/friends', function (req, res) {
-    // Capture the user input object
-    var userInput = req.body;
-    // console.log('userInput = ' + JSON.stringify(userInput));
 
-    // Here we take the result of the user"s survey POST and parse it.
+  // user submits a form and it submits data to the server.
+  app.post('/api/friends', function(req, res){
+
+    var bestMatch = {
+      name: "",
+      photo: "",
+      friendDifference: 1000
+    };
+
+    
     var userData = req.body;
     var userScores = userData.scores;
-
-    // This variable will calculate the difference between the user"s scores and the scores of
-    // each user in the database
     var totalDifference = 0;
 
-    // Here we loop through all the friend possibilities in the database.
+    // loops the friend database
     for (var i = 0; i < friends.length; i++) {
 
       console.log(friends[i].name);
       totalDifference = 0;
 
-      // We then loop through all the scores of each friend
-      for (var j = 0; j < friends[i].scores[j]; j++) {
+      // loops through the friend possibilities 
+      for (var x = 0; x < friends[i].scores[x]; x++) {
 
-        // We calculate the difference between the scores and sum them into the totalDifference
-        totalDifference += Math.abs(parseInt(userScores[j]) - parseInt(friends[i].scores[j]));
+    // calculates the sum using totalDifference
+    totalDifference += Math.abs(parseInt(userScores[x]) - parseInt(friends[i].scores[x]));
 
-        // If the sum of differences is less then the differences of the current "best match"
-        if (totalDifference <= bestMatch.friendDifference) {
+    // If the sum of differences is less then the differences of the current "best match"
+    if (totalDifference <= bestMatch.friendDifference) {
 
           // Reset the bestMatch to be the new friend.
           bestMatch.name = friends[i].name;
@@ -56,4 +55,3 @@ console.log('___ENTER apiRoutes.js___');
   });
 
 };
-    

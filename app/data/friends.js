@@ -1,4 +1,4 @@
-[
+var friends = [
     {
     "name": "Nick Miller",
     "photo": "https://a1cf74336522e87f135f-2f21ace9a6cf0052456644b80fa06d4f.ssl.cf2.rackcdn.com/images/characters/p-New-Girl-Jake-Johnson.jpg",
@@ -79,4 +79,7 @@
     3
     ]
     }
-    ]
+
+];
+    // exports friends list
+    module.exports = friends;
