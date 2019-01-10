@@ -5,7 +5,7 @@
 
 // 	// API GET Requests
 // 	app.get('/api/friends', function(req, res){
-// 		res.json(Friends);
+// 		res.post(Friends);
 // 	});
 
 
@@ -23,9 +23,9 @@
 // 	for (var i=0; i<(Friends.length-1); i++){
 
 // 		//loop through all of question values and sum total their subtracted absolute values
-// 		for (var j=0; j<10; j++){
+// 		for (var m=0; m<10; m++){
 // 			// this adds the numerical answers of each friend to the total difference; then uses the absolute value to determine the difference between the two (absolute value is used so that 5-3 and 3-5 both equal 2)
-// 			totalDifference += Math.abs(Friends[i].scores[j] - newFriend.scores[j]);
+// 			totalDifference += Math.abs(Friends[i].scores[m] - newFriend.scores[m]);
 // 		}
 
 // 		// each total difference, for each potential friend, is pushed into the allDifferences array 
