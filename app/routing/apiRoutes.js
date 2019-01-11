@@ -52,7 +52,7 @@ module.exports = function(app){
     // Return a JSON with the user's bestMatch. This will be used by the HTML in the next page
     res.json(bestMatch);
 
-    console.log(friends[i].name + "    " + totalDifference);
+    console.log(friends[i].name + "   " + totalDifference);
   });
 
 };

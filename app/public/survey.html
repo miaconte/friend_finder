@@ -135,10 +135,27 @@
         </select>
       </div>
       <br />
-      <!-- <form action="api/friends"><input type="Submit"></form> -->
+      <!-- Shows Matches -->
+      <div class="modal">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                      <h4 class="modal-title"></h4>
+                  </div>
+                  <div class="modal-body text-center">
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+
       <button type="button" id="submit" class="btn btn-secondary btn-lg btn-block" href="/api/friends">Submit and find
         your friend!</button>
-    </div>
+      </div>
+      </select>
     </form>
     <br />
     <br />
@@ -164,20 +181,9 @@
       
       $("#submit").on("click", function () {
         event.preventDefault();
-        function validateForm() {
-          var isValid = true;
-          $(".form-control").each(function () {
-            if ($(this).val() === "") {
-              isValid = false;
-            }
-            return isValid;
-          });
-        }
-        console.log("Submit button has been clicked");
-        // If all required fields are filled
-        if (validateForm()) {
-          // Create an object for the user's data
-          var userData = {
+        console.log("button click for submit is working")
+
+        var userData = {
             name: $("#name").val(),
             photo: $("#photo").val(),
             scores: [
@@ -193,6 +199,21 @@
               $("#q10").val()
             ]
           };
+
+          $.post(currentURL + "/api/friends", userData, function(data) {
+            		// If the data has a match, then show this
+                if (data.name !== undefined) {
+                    matchStatus.html('Your match...');
+                    modalBody.html('<p>...is ' + data.name + '!</p><img src="' + data.photo + '" height="200">');
+                } else {
+                	// If no match, show this
+                    matchStatus.html('Not enough data!');
+                    modalBody.html('<p>Unfortunately there is not yet enough user data to match you</p>');
+                }
+                // Toggle modal on
+                $('.modal').modal('toggle');
+            });
+        
           // Grab the URL of the website
           var currentURL = window.location.origin;
           // AJAX post the data to the friends API.
@@ -203,11 +224,8 @@
             // Show the modal with the best match
             // $("#resultsModal").modal("toggle");
           });
-        } else {
-          alert("Please fill out our entire survey so we can find you a friend!!");
-        }
-        return false;
-      });
+        } 
+      );
     </script>
   </body>
 
