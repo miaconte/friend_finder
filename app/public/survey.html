@@ -177,55 +177,38 @@
   }
 </style>
     <script type="text/javascript">
-      // on click for submit, validating customers information
-      
-      $("#submit").on("click", function () {
-        event.preventDefault();
-        console.log("button click for submit is working")
+        $("#submit").on("click", function () {
+            event.preventDefault();
+            console.log("submit button clicked")
+            var userData = {
+                scores:[
+                $("#q1").val(),
+                $("#q2").val(),
+                $("#q3").val(),
+                $("#q4").val(),
+                $("#q5").val(),
+                $("#q6").val(),
+                $("#q7").val(),
+                $("#q8").val(),
+                $("#q9").val(),
+                $("#q10").val()
+            ],
+            name: $("#name"),
+            photo: $("#photo")
+            }
+            console.log(userData);
+            
+        $.post("/api/friends", userData, function(data) {
 
-        var userData = {
-            name: $("#name").val(),
-            photo: $("#photo").val(),
-            scores: [
-              $("#q1").val(),
-              $("#q2").val(),
-              $("#q3").val(),
-              $("#q4").val(),
-              $("#q5").val(),
-              $("#q6").val(),
-              $("#q7").val(),
-              $("#q8").val(),
-              $("#q9").val(),
-              $("#q10").val()
-            ]
-          };
-
-          $.post(currentURL + "/api/friends", userData, function(data) {
-            		// If the data has a match, then show this
-                if (data.name !== undefined) {
-                    matchStatus.html('Your match...');
-                    modalBody.html('<p>...is ' + data.name + '!</p><img src="' + data.photo + '" height="200">');
-                } else {
-                	// If no match, show this
-                    matchStatus.html('Not enough data!');
-                    modalBody.html('<p>Unfortunately there is not yet enough user data to match you</p>');
-                }
-                // Toggle modal on
-                $('.modal').modal('toggle');
-            });
-        
-          // Grab the URL of the website
-          var currentURL = window.location.origin;
-          // AJAX post the data to the friends API.
-          $.post(currentURL + "/api/friends", userData, function (data) {
-            // Grab the result from the AJAX post
-            $("#matchName").text(data.name);
-            $("#matchImg").attr("src", data.photo);
-            // Show the modal with the best match
-            // $("#resultsModal").modal("toggle");
-          });
-        } 
-      );
+        if (data) {
+          alert("Yay! You made a friend!");
+        }
+        else {
+          alert("Sorry, no friends for you.");
+        }
+        });
+    });
+    </script>
     </script>
   </body>
 
